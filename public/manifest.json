@@ -1,0 +1,9 @@
+{
+    "bootstrap" : "index.html",
+    "width" : 800,
+    "height" : 650,
+    "mobile" : {
+    	"orientation":"portrait",
+    	"bootstrap":"index.html"
+    }
+}
