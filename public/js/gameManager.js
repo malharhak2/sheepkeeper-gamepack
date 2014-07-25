@@ -1,4 +1,5 @@
-define(["time", "config"], function (time, config) {
+define(["time", "config", "scores"], 
+	function (time, config, scores) {
 	var gameManager = {
 		score : 0,
 		frags : 0,
@@ -21,13 +22,7 @@ define(["time", "config"], function (time, config) {
 		}
 	};
 	gameManager.saveScore = function () {
-		var score = new NScore();
-		score.setValue(this.score);
-		nuggetaPlug.submitScoreRequest(score, "topscore", function (response) {
-			if (config.debug) {
-				console.log(response);
-			}
-		});
+		scores.submit (this.score, "topscore");
 	};
 	
 	gameManager.reset = function () {

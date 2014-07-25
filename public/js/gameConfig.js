@@ -24,6 +24,14 @@ define([], function () {
     	radius : 70,
     	timer : 0.5
     },
+    loadingBar : {
+        width : 300,
+        height : 90,
+        bgColor : "green",
+        overlayColor : "rgba(50, 250, 50, 0.5)",
+        font : "30px Arial",
+        txtColor : "black"
+    },
 
     feedback : {
     	duration : 0.5,

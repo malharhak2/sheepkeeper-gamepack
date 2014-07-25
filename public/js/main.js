@@ -4,6 +4,7 @@ requirejs.config ({
 
 		// apis
 		nuggetaInt		: "../gamepack/apis/nuggetaInt",
+		kongregateInt 	: "../gamepack/apis/kongregateInt",
 
 		// Classes
 		Collider 		: "../gamepack/classes/Collider",
@@ -15,6 +16,9 @@ requirejs.config ({
 		// entities
 		world 			: "../gamepack/entities/world",
 
+		// GUI
+		loadingBar 		: "../gamepack/gui/loadingBar",
+		
 		// Enums
 		GameStates 		: "../gamepack/enums/GameStates",
 
@@ -51,7 +55,9 @@ requirejs.config ({
 		gameloop 		: "../gamepack/gameloop",
 		config 			: "../gamepack/config",
 		initGame 		: "../gamepack/initGame",
-
+		leadbolt 		: "../gamepack/leadbolt",
+		scores 			: "../gamepack/scores",
+		
 		/* External libs */
 		jquery 			: "../libs/jquery/jquery.min",
 		"requirejs-domready": "../libs/requirejs-domready/domReady",
@@ -73,14 +79,30 @@ requirejs.config ({
 	},
 	urlArgs: "d=" + Date.now()
 });
-require (["requirejs-domready", "config", "gameConfig"], function (domready, config, gameConfig) {
+function addScript (obj) {
+	if (obj.use) {
+		var scr = document.createElement("script");
+		scr.type = "text/javascript"
+		scr.src = obj.url;
+		document.head.appendChild(scr);
+	}
+}
+require (["requirejs-domready", "jquery", "config", "gameConfig"], 
+function (domready, $, config, gameConfig) {
 	config.init(gameConfig);
-	require (["gameloop", "mainScene", "scenesManager", "menuScene"], 
-	function (gameloop, mainScene, scenesManager, menuScene) {
-		
-		scenesManager.addScene("game", mainScene);
-		scenesManager.addScene("menu", menuScene);
-		gameloop.init();
-		return true;
+	var scripts = [];
+	for (var i in config.api) {
+		addScript(config.api[i]);
+	}
+	$(document).ready ( function () {
+		console.log("stuff loaded");
+		require (["gameloop", "mainScene", "scenesManager", "menuScene"], 
+		function (gameloop, mainScene, scenesManager, menuScene) {
+			
+			scenesManager.addScene("game", mainScene);
+			scenesManager.addScene("menu", menuScene);
+			gameloop.init();
+			return true;
+		});
 	});
-})
+});
